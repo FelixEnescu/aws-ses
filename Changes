@@ -1,6 +1,8 @@
 Revision history for Perl module Net::AWS::SES
 
-
+0.04  2014-05-21
+    - added Amazon region support
+    
 0.03  2013-09-19
 	- fixed MANIFEST
 

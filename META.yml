@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               Net-AWS-SES
-version:            0.03
+version:            0.04
 abstract:           Perl extension that implements Amazon Simple Email Service (SES) client
 author:
     - Sherzod Ruzmetov <sherzodr@cpan.org>

@@ -10,7 +10,7 @@ use LWP::UserAgent;
 use Digest::HMAC_SHA1;
 use Net::AWS::SES::Response;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 sub __timestamp {
     return localtime->datetime;
@@ -62,6 +62,7 @@ sub new {
     my %data = (
         access_key   => '',
         secret_key   => '',
+        region       => 'us-east-1',
         from         => '',
         __user_agent => undef,
         __response   => undef,
@@ -99,6 +100,13 @@ sub secret_key {
     return $self->{secret_key} = $key;
 }
 
+sub region {
+    my $self = shift;
+    my ($key) = @_;
+    return $self->{region} unless $key;
+    return $self->{region} = $key;
+}
+
 sub call {
     my $self = shift;
     my ( $action, $args, $responseClass ) = @_;
@@ -112,7 +120,7 @@ sub call {
     $args->{Timestamp}      = $self->__timestamp;
 
     my $ua = $self->__user_agent;
-    my $response = $ua->post( "https://email.us-east-1.amazonaws.com", $args );
+    my $response = $ua->post( "https://email." . $self->region . ".amazonaws.com", $args );
     return Net::AWS::SES::Response->new( $response, $action );
 }
 
@@ -290,9 +298,11 @@ All the methods (including C<call()>) returns an instance of L<Response|Net::AWS
 
 =head2 new(access_key => $key, secret_key => $s_key)
 
+=head2 new(access_key => $key, secret_key => $s_key, region => $region)
+
 =head2 new(access_key => $key, secret_key => $s_key, from => 'default@from.address')
 
-Returns a Net::AWS::SES instance. C<access_key> and C<secret_key> arguments are required. C<from> is optional, and can be overriden in respective api calls. Must be your verified identity.
+Returns a Net::AWS::SES instance. C<access_key> and C<secret_key> arguments are required. C<region> is optional. Must be a valid SES region: C<us-east-1>, C<us-west-2> or C<eu-west-1>. Default is C<us-east-1>. C<from> is optional, and can be overridden in respective api calls. Must be your verified identity. 
 
 =head2 send( $msg )
 

@@ -58,10 +58,13 @@ METHODS
     result data in JSON notation for your reference.
 
   new(access_key => $key, secret_key => $s_key)
+  new(access_key => $key, secret_key => $s_key, region => $region)
   new(access_key => $key, secret_key => $s_key, from => 'default@from.address')
     Returns a Net::AWS::SES instance. "access_key" and "secret_key"
-    arguments are required. "from" is optional, and can be overriden in
-    respective api calls. Must be your verified identity.
+    arguments are required. "region" is optional. Must be a valid SES region: 
+    us-east-1, us-west-2 or eu-west-1. Default is us-east-1."from" is optional, 
+    and can be overridden in respective api calls. Must be your verified 
+    identity.
 
   send( $msg )
   send(%options)
