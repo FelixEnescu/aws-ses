@@ -19,4 +19,4 @@ $reg =  $ses->region;
 print "My region is $reg\n";
 ```
 
-Region is optional, if not provided dafault is 'us-east-1'. Current list of Amazon Simple Email Service (Amazon SES) is here: http://docs.aws.amazon.com/general/latest/gr/rande.html#ses_region.
+Region is optional, if not provided default is 'us-east-1'. Current list of Amazon Simple Email Service (Amazon SES) is here: http://docs.aws.amazon.com/general/latest/gr/rande.html#ses_region.
