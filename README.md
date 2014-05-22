@@ -6,7 +6,7 @@ aws-ses
 
 NET::AWS::SES with region support
 
-Original [NET::AWS::SES](http://search.cpan.org/~sherzodr/Net-AWS-SES/lib/Net/AWS/SES.pm) uses a US East (Northern Virginia) region hardcoded in SES.pm. Added region support in constructor and respective accesor routine:
+Original (version 0.03) [NET::AWS::SES](http://search.cpan.org/~sherzodr/Net-AWS-SES/lib/Net/AWS/SES.pm) uses a US East (Northern Virginia) region hardcoded in SES.pm. Added region support in constructor and respective accesor routine:
 
 ```perl
 use Net::AWS::SES;
