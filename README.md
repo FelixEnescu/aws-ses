@@ -1,9 +1,12 @@
 aws-ses
 =======
 
+**This was integrated into official version on CPAN:  [NET::AWS::SES](http://search.cpan.org/~sherzodr/Net-AWS-SES/lib/Net/AWS/SES.pm).**
+
+
 NET::AWS::SES with region support
 
-Original [NET::AWS::SES](https://metacpan.org/pod/Net::AWS::SES) uses a US East (Northern Virginia) region hardcoded in SES.pm. Added region support in constructor and respective accesor routine:
+Original [NET::AWS::SES](http://search.cpan.org/~sherzodr/Net-AWS-SES/lib/Net/AWS/SES.pm) uses a US East (Northern Virginia) region hardcoded in SES.pm. Added region support in constructor and respective accesor routine:
 
 ```perl
 use Net::AWS::SES;
