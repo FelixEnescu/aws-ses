@@ -1,5 +1,8 @@
 Revision history for Perl module Net::AWS::SES
 
+0.05  2014-05-21
+    - added Email::MIME support
+
 0.04  2014-05-21
     - added Amazon region support
     

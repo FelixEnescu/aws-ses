@@ -1,10 +1,19 @@
-aws-ses
-=======
+NET::AWS::SES
+=============
 
-**This was integrated into official version on CPAN:  [NET::AWS::SES](http://search.cpan.org/~sherzodr/Net-AWS-SES/lib/Net/AWS/SES.pm).**
+NET::AWS::SES with region and Email::MIME support
+
+## Email::MIME
+
+NET::AWS::SES can use an Email::MIME object to send email:
+
+```perl
+my $msg = Email::MIME->new($msg_str_ref);
+my $r = $ses->send( $msg );  
+```
 
 
-NET::AWS::SES with region support
+## Region
 
 Original (version 0.03) [NET::AWS::SES](http://search.cpan.org/~sherzodr/Net-AWS-SES/lib/Net/AWS/SES.pm) uses a US East (Northern Virginia) region hardcoded in SES.pm. Added region support in constructor and respective accesor routine:
 

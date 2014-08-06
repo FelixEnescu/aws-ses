@@ -10,7 +10,7 @@ use LWP::UserAgent;
 use Digest::HMAC_SHA1;
 use Net::AWS::SES::Response;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 sub __timestamp {
     return localtime->datetime;
@@ -233,10 +233,16 @@ sub get_statistics {
 sub send_mime {
     my $self = shift;
     my $msg = $_[0] if ( @_ == 1 );
-    if ( $msg && ref($msg) && $msg->isa("MIME::Entity") ) {
-        my $r = $self->call( 'SendRawEmail',
-            { 'RawMessage.Data' => encode_base64( $msg->stringify ) } );
-        return $r;
+    if ( $msg && ref($msg) ) {
+        if ( $msg->isa("MIME::Entity") ) {
+            my $r = $self->call( 'SendRawEmail',
+                { 'RawMessage.Data' => encode_base64( $msg->stringify ) } );
+            return $r;
+        } elsif ( $msg->isa("Email::MIME") ) {
+            my $r = $self->call( 'SendRawEmail',
+                { 'RawMessage.Data' => encode_base64( $msg->as_string ) } );
+            return $r;        
+        }
     }
 }
 
@@ -280,6 +286,10 @@ Net::AWS::SES - Perl extension that implements Amazon Simple Email Service (SES)
     my $msg = MIME::Entity->build();
     my $r = $ses->send( $msg );
 
+    ######### using Email::MIME
+    my $msg = Email::MIME->new($msg_str_ref);
+    my $r = $ses->send( $msg );
+    
 =head1 DESCRIPTION
 
 Implements Amazon Web Services' Simple Email Service (SES). Sess L<http://docs.aws.amazon.com/ses/latest/DeveloperGuide/Welcome.html> for details and to sign-up for the service.
@@ -310,7 +320,7 @@ Returns a Net::AWS::SES instance. C<access_key> and C<secret_key> arguments are 
 
 Sends an email address and returns L<Response|Net::AWS::SES::Response> instance.
 
-If the only argument is passed, it must be an instance of MIME::Entity. Example:
+If the only argument is passed, it must be an instance of MIME::Entity or Email::MIME. Example:
 
     $msg = MIME::Entity->build(
         From    => 'sherzodr@cpan.org',
@@ -333,7 +343,7 @@ If the only argument is passed, it must be an instance of MIME::Entity. Example:
         die $r->error_message;
     }
 
-If you don't have MIME::Entity instance handy you may use the following arguments to have AWS SES build the message for you (bold entries are required): C<From>, B<To>, B<Subject>, B<Body>, C<Body_html>, C<ReturnPath>. To send e-mail to multiple emails just pass an arrayref to C<To>.
+If you don't have a MIME::Entity or Email::MIME instance handy you may use the following arguments to have AWS SES build the message for you (bold entries are required): C<From>, B<To>, B<Subject>, B<Body>, C<Body_html>, C<ReturnPath>. To send e-mail to multiple emails just pass an arrayref to C<To>.
 
 If C<From> is missing it defaults to your default e-mail given to C<new()>. Remember: this must be a verified e-mail. Example:
 

@@ -70,8 +70,8 @@ METHODS
   send(%options)
     Sends an email address and returns Response instance.
 
-    If the only argument is passed, it must be an instance of MIME::Entity.
-    Example:
+    If the only argument is passed, it must be an instance of MIME::Entity 
+    or Email::MIME. Example:
 
         $msg = MIME::Entity->build(
             From    => 'sherzodr@cpan.org',
@@ -94,10 +94,11 @@ METHODS
             die $r->error_message;
         }
 
-    If you don't have MIME::Entity instance handy you may use the following
-    arguments to have AWS SES build the message for you (bold entries are
-    required): "From", To, Subject, Body, "Body_html", "ReturnPath". To send
-    e-mail to multiple emails just pass an arrayref to "To".
+    If you don't have MIME::Entity or Email::MIME instance handy you may use 
+    the following arguments to have AWS SES build the message for you (bold 
+    entries are required): "From", To, Subject, Body, "Body_html", 
+    "ReturnPath". To send e-mail to multiple emails just pass an arrayref to 
+    "To".
 
     If "From" is missing it defaults to your default e-mail given to
     "new()". Remember: this must be a verified e-mail. Example:
